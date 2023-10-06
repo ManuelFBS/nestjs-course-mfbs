@@ -2,6 +2,7 @@ import { BaseEntity } from '../../config/base.entity';
 import { IUser } from '../../interfaces/user.interface';
 import { Column, Entity } from 'typeorm';
 import { ROLES } from '../../constants/roles';
+import { UsersProjectsEntity } from './usersProjects.entity';
 
 @Entity({ name: 'users' })
 export class UsersEntity extends BaseEntity implements IUser {
@@ -25,4 +26,6 @@ export class UsersEntity extends BaseEntity implements IUser {
 
   @Column({ type: 'enum', enum: ROLES })
   role: ROLES;
+
+  projectsIncludes: UsersProjectsEntity[];
 }
