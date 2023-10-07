@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { UsersEntity } from '../entities/users.entity';
-import { UserDTO } from '../dto/user.dto';
+import { UserDTO, UserUpdateDTO } from '../dto/user.dto';
 import { ErrorManager } from 'src/utils/error.manager';
 
 @Injectable()
@@ -73,6 +73,42 @@ export class UsersService {
           message: 'No se encontró ningún resultado',
         });
       }
+      return user;
+    } catch (error) {
+      throw new ErrorManager.createSignatureError(error.message);
+    }
+  }
+
+  public async updateUser(
+    body: UserUpdateDTO,
+    id: number,
+  ): Promise<UpdateResult | undefined> {
+    try {
+      const user: UpdateResult = await this.userRepository.update(id, body);
+
+      if (user.affected === 0) {
+        throw new ErrorManager({
+          type: 'BAD_REQUEST',
+          message: 'No se pudo actualizar...!',
+        });
+      }
+      return user;
+    } catch (error) {
+      throw new ErrorManager.createSignatureError(error.message);
+    }
+  }
+
+  public async deleteUser(id: number): Promise<DeleteResult> {
+    try {
+      const user: DeleteResult = await this.userRepository.delete(id);
+
+      if (user.affected === 0) {
+        throw new ErrorManager({
+          type: 'BAD_REQUEST',
+          message: 'No se pudo eliminar...!',
+        });
+      }
+
       return user;
     } catch (error) {
       throw new ErrorManager.createSignatureError(error.message);
