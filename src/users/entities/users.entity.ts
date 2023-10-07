@@ -1,6 +1,6 @@
 import { BaseEntity } from '../../config/base.entity';
 import { IUser } from '../../interfaces/user.interface';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { ROLES } from '../../constants/roles';
 import { UsersProjectsEntity } from './usersProjects.entity';
 
@@ -27,5 +27,6 @@ export class UsersEntity extends BaseEntity implements IUser {
   @Column({ type: 'enum', enum: ROLES })
   role: ROLES;
 
+  @OneToMany(() => UsersProjectsEntity, (usersProjects) => usersProjects.user)
   projectsIncludes: UsersProjectsEntity[];
 }
