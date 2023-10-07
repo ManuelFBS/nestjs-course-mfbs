@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UsersEntity } from '../entities/users.entity';
 import { UserDTO } from '../dto/user.dto';
+import { ErrorManager } from 'src/utils/error.manager';
 
 @Injectable()
 export class UsersService {
@@ -39,15 +40,42 @@ export class UsersService {
 
       return user;
     } catch (error) {
-      throw new Error(error);
+      throw new ErrorManager.createSignatureError(error.message);
     }
   }
 
   public async findUsers(): Promise<UsersEntity[]> {
     try {
-      return await this.userRepository.find();
+      const users: UsersEntity[] = await this.userRepository.find();
+
+      if (users.length === 0) {
+        throw new ErrorManager({
+          type: 'BAD_REQUEST',
+          message: 'No se encontró ningún resultado...!',
+        });
+      }
+      return users;
     } catch (error) {
-      throw new Error(error);
+      throw new ErrorManager.createSignatureError(error.message);
+    }
+  }
+
+  public async findUserById(id: number): Promise<UsersEntity> {
+    try {
+      const user: UsersEntity = await this.userRepository
+        .createQueryBuilder('user')
+        .where({ id })
+        .getOne();
+
+      if (!user) {
+        throw new ErrorManager({
+          type: 'BAD_REQUEST',
+          message: 'No se encontró ningún resultado',
+        });
+      }
+      return user;
+    } catch (error) {
+      throw new ErrorManager.createSignatureError(error.message);
     }
   }
 }
