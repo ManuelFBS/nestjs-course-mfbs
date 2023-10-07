@@ -7,7 +7,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { UserDTO } from '../dto/user.dto';
+import { UserDTO, UserUpdateDTO } from '../dto/user.dto';
 import { UsersService } from '../services/users.service';
 
 @Controller('users')
@@ -22,5 +22,23 @@ export class UsersController {
   @Get('all')
   public async findAllUsers() {
     return await this.userService.findUsers();
+  }
+
+  @Get(':id')
+  public async findUserById(@Param('id') id: number) {
+    return await this.userService.findUserById(id);
+  }
+
+  @Put('edit/:id')
+  public async updateUser(
+    @Body() body: UserUpdateDTO,
+    @Param('id') id: number,
+  ) {
+    return await this.userService.updateUser(body, id);
+  }
+
+  @Delete('delete/:id')
+  public async deleteUser(@Param('id') id: number) {
+    return await this.userService.deleteUser(id);
   }
 }
