@@ -37,7 +37,7 @@ export class UserDTO {
   role: ROLES;
 }
 
-export class UpdateUserDTO {
+export class UserUpdateDTO {
   @IsOptional()
   @IsString()
   firstName: string;
