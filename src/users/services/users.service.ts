@@ -4,12 +4,15 @@ import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { UsersEntity } from '../entities/users.entity';
 import { UserDTO, UserUpdateDTO } from '../dto/user.dto';
 import { ErrorManager } from '../../utils/error.manager';
+import { UsersProjectsEntity } from '../entities/usersProjects.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(UsersEntity)
     private readonly userRepository: Repository<UsersEntity>,
+    @InjectRepository(UsersProjectsEntity)
+    private readonly userProjectRepository: Repository<UsersProjectsEntity>,
   ) {}
 
   public async createUser(body: UserDTO): Promise<UsersEntity> {
