@@ -7,6 +7,6 @@ declare namespace NodeJS {
     DB_USER: string;
     DB_PASSWORD: string;
     DB_NAME: string;
-    HASH_JUMP: number;
+    HASH_SALT: number;
   }
 }

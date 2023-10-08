@@ -30,10 +30,10 @@ export class UsersService {
       }
 
       const newUser = new UsersEntity();
-      const newUserPassword = await bcrypt.hash(
-        body.password,
-        process.env.HASH_JUMP,
-      );
+      // const HS: number = process.env.HASH_SALT;
+      const newUserPassword = await bcrypt.hash(body.password, 10);
+
+      console.log(newUserPassword);
 
       newUser.id = initialId;
       newUser.firstName = body.firstName;
@@ -48,7 +48,7 @@ export class UsersService {
 
       return user;
     } catch (error) {
-      throw new ErrorManager.createSignatureError(error.message);
+      throw ErrorManager.createSignatureError(error.message);
     }
   }
 
