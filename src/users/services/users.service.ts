@@ -30,7 +30,7 @@ export class UsersService {
       }
 
       const newUser = new UsersEntity();
-      // const HS: number = process.env.HASH_SALT;
+      // const HS: number = process.env.HASH_SALT; ========>> No acepta la variable de entorno...???
       const newUserPassword = await bcrypt.hash(body.password, 10);
 
       console.log(newUserPassword);
