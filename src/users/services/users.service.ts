@@ -30,6 +30,10 @@ export class UsersService {
       }
 
       const newUser = new UsersEntity();
+      const newUserPassword = await bcrypt.hash(
+        body.password,
+        process.env.HASH_JUMP,
+      );
 
       newUser.id = initialId;
       newUser.firstName = body.firstName;
@@ -37,7 +41,7 @@ export class UsersService {
       newUser.age = body.age;
       newUser.email = body.email;
       newUser.username = body.username;
-      newUser.password = body.password;
+      newUser.password = newUserPassword;
       newUser.role = body.role;
 
       const user = await this.userRepository.save(newUser);
