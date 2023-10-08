@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { UsersEntity } from '../entities/users.entity';
-import { UserDTO, UserUpdateDTO } from '../dto/user.dto';
+import { UserDTO, UserToProjectDTO, UserUpdateDTO } from '../dto/user.dto';
 import { ErrorManager } from '../../utils/error.manager';
 import { UsersProjectsEntity } from '../entities/usersProjects.entity';
 
@@ -79,6 +79,37 @@ export class UsersService {
       return user;
     } catch (error) {
       throw ErrorManager.createSignatureError(error.message);
+    }
+  }
+
+  public async relationToProject(
+    body: UserToProjectDTO,
+  ): Promise<UsersProjectsEntity> {
+    try {
+      const lastUserProject: UsersProjectsEntity =
+        await this.userProjectRepository
+          .createQueryBuilder('userproject')
+          .orderBy('userproject.id', 'DESC')
+          .getOne();
+
+      let initialId = 1001;
+
+      if (lastUserProject) {
+        initialId = lastUserProject.id + 1;
+      }
+
+      const newUserProject = new UsersProjectsEntity();
+
+      newUserProject.id = initialId;
+      newUserProject.user = body.user;
+      newUserProject.project = body.project;
+      newUserProject.accessLevel = body.accessLevel;
+
+      const userProject = await this.userProjectRepository.save(newUserProject);
+
+      return userProject;
+    } catch (error) {
+      throw new ErrorManager.createSignatureError(error.message);
     }
   }
 
