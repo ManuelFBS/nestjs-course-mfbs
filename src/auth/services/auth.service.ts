@@ -49,13 +49,13 @@ export class AuthService {
   public async generateJWT(user: UsersEntity): Promise<any> {
     const getUser = await this.userService.findUserById(user.id);
     const payload: PayloadToken = {
+      sub: getUser.id.toString(),
       role: getUser.role,
-      sub: getUser.id,
     };
 
     return {
       accessToke: this.signJWT({
-        payload: jwt,
+        payload,
         secret: process.env.JWT_SECRET,
         expires: '1h',
       }),

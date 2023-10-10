@@ -1,7 +1,7 @@
 import { ROLES } from 'src/constants/roles';
 
 export interface PayloadToken {
-  sub: number;
+  sub: string;
   role: ROLES;
 }
 
