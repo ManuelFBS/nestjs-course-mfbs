@@ -13,9 +13,10 @@ import { UsersService } from '../services/users.service';
 import { PublicAccess } from '../../auth/decorators/public.decorator';
 import { AuthGuard } from '../../auth/guards/auth.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @Controller('users')
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard, RolesGuard)
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
@@ -24,7 +25,7 @@ export class UsersController {
     return await this.userService.createUser(body);
   }
 
-  // @Roles('ADMIN')
+  @Roles('ADMIN')
   @Get('all')
   public async findAllUsers() {
     return await this.userService.findUsers();
