@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate {
     if (isPublic) return true;
 
     const req = context.switchToHttp().getRequest<Request>();
-    const token = req.headers['nestjs_token'];
+    const token = req.headers['mfbsnestjs_token'];
 
     if (!token || Array.isArray(token)) {
       throw new UnauthorizedException('Invalid token...');
