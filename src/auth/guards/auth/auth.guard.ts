@@ -10,6 +10,7 @@ import { IUseToken } from 'src/auth/interfaces/auth.interface';
 import { PUBLIC_KEY } from 'src/constants/key-decorators';
 import { UsersService } from 'src/users/services/users.service';
 import { useToken } from 'src/utils/use.token';
+import { Request } from 'express';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -49,7 +50,8 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException('Invalid user...!');
     }
 
-    //req.idUser
+    req.idUser = user.id.toString();
+    req.roleUser = user.role;
 
     return true;
   }
