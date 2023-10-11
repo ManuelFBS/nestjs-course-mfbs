@@ -24,7 +24,7 @@ export class UsersController {
     return await this.userService.createUser(body);
   }
 
-  @Roles('ADMIN')
+  // @Roles('ADMIN')
   @Get('all')
   public async findAllUsers() {
     return await this.userService.findUsers();
