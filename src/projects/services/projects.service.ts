@@ -15,7 +15,10 @@ export class ProjectsService {
     private readonly userProjectRepository: Repository<UsersProjectsEntity>,
   ) {}
 
-  public async createProject(body: ProjectDTO): Promise<ProjectsEntity> {
+  public async createProject(
+    body: ProjectDTO,
+    userId: number,
+  ): Promise<ProjectsEntity> {
     try {
       const lastProject: ProjectsEntity = await this.projectRepository
         .createQueryBuilder('project')
