@@ -45,15 +45,18 @@ export class AccessLevelGuard implements CanActivate {
 
     const { roleUser, idUser } = req;
 
-    if (roles === undefined) {
-      if (!admin) {
-        return true;
-      } else if (admin && roleUser === admin) {
-        return true;
-      } else {
-        throw new UnauthorizedException(
-          'No tienes permisos para realizar esta operación...!',
-        );
+    if (accesLevel === undefined) {
+      console.log(accesLevel);
+      if (roles === undefined) {
+        if (!admin) {
+          return true;
+        } else if (admin && roleUser === admin) {
+          return true;
+        } else {
+          throw new UnauthorizedException(
+            'No tienes permisos para realizar esta operación...!',
+          );
+        }
       }
     }
 
