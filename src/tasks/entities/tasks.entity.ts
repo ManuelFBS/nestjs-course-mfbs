@@ -1,6 +1,6 @@
-import { Column, Entity } from 'typeorm';
-import { STATUS_TASK } from 'src/constants/status-task';
-import { ProjectsEntity } from 'src/projects/entities/projects.entity';
+import { Column, Entity, ManyToOne } from 'typeorm';
+import { STATUS_TASK } from '../../constants/status-task';
+import { ProjectsEntity } from '../../projects/entities/projects.entity';
 import { BaseEntity } from '../../config/base.entity';
 
 @Entity({ name: 'task' })
@@ -17,5 +17,6 @@ export class TasksEntity extends BaseEntity {
   @Column()
   responsableName: string;
 
+  @ManyToOne(() => ProjectsEntity, (project) => project.tasks)
   project: ProjectsEntity;
 }
