@@ -24,8 +24,7 @@ export class ProjectsService {
   ): Promise<ProjectsEntity> {
     try {
       const user = await this.userService.findUserById(userId);
-      //
-      //
+
       const lastProject: ProjectsEntity = await this.projectRepository
         .createQueryBuilder('project')
         .orderBy('project.id', 'DESC')
