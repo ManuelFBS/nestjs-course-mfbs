@@ -6,13 +6,13 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
-import { Observable } from 'rxjs';
 import {
+  ACCESS_LEVEL_KEY,
   ADMIN_KEY,
   PUBLIC_KEY,
   ROLES_KEY,
 } from '../../constants/key-decorators';
-import { ACCESS_LEVEL, ROLES } from '../../constants/roles';
+import { ROLES } from '../../constants/roles';
 import { UsersService } from '../../users/services/users.service';
 
 @Injectable()
@@ -35,7 +35,7 @@ export class AccessLevelGuard implements CanActivate {
     );
 
     const accesLevel = this.reflector.get<number>(
-      ACCESS_LEVEL,
+      ACCESS_LEVEL_KEY,
       context.getHandler(),
     );
 
@@ -46,7 +46,6 @@ export class AccessLevelGuard implements CanActivate {
     const { roleUser, idUser } = req;
 
     if (accesLevel === undefined) {
-      console.log(accesLevel);
       if (roles === undefined) {
         if (!admin) {
           return true;

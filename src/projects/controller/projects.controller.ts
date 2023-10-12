@@ -10,10 +10,10 @@ import {
 } from '@nestjs/common';
 import { ProjectDTO, ProjectUpdateDTO } from '../dto/project.dto';
 import { ProjectsService } from '../services/projects.service';
-import { AuthGuard } from 'src/auth/guards/auth.guard';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { AccessLevelGuard } from 'src/auth/guards/access-level.guard';
-import { AccessLevel } from 'src/auth/decorators/access-level.decorator';
+import { AuthGuard } from '../../auth/guards/auth.guard';
+import { RolesGuard } from '../../auth/guards/roles.guard';
+import { AccessLevelGuard } from '../../auth/guards/access-level.guard';
+import { AccessLevel } from '../../auth/decorators/access-level.decorator';
 
 @Controller('projects')
 @UseGuards(AuthGuard, RolesGuard, AccessLevelGuard)
