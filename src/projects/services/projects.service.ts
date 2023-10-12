@@ -18,10 +18,7 @@ export class ProjectsService {
     private readonly userService: UsersService,
   ) {}
 
-  public async createProject(
-    body: ProjectDTO,
-    userId: number,
-  ): Promise<ProjectsEntity> {
+  public async createProject(body: ProjectDTO, userId: number): Promise<any> {
     try {
       const user = await this.userService.findUserById(userId);
 
@@ -42,18 +39,16 @@ export class ProjectsService {
       newProject.name = body.name;
       newProject.description = body.description;
       //
-      const projectCreate = await this.projectRepository.create(newProject);
+      const project = await this.projectRepository.save(newProject);
       //
-      await this.userProjectRepository.save({
+      const userPro = await this.userProjectRepository.save({
         id: initialId,
         accessLevel: ACCESS_LEVEL.OWNER,
         user: user,
-        project: body,
+        project,
       });
 
-      const project = await this.projectRepository.save(projectCreate);
-
-      return project;
+      return userPro;
     } catch (error) {
       throw ErrorManager.createSignatureError(error.message);
     }
