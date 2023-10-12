@@ -5,6 +5,8 @@ import { ProjectsEntity } from '../entities/projects.entity';
 import { ProjectDTO, ProjectUpdateDTO } from '../dto/project.dto';
 import { ErrorManager } from 'src/utils/error.manager';
 import { UsersProjectsEntity } from '../../users/entities/usersProjects.entity';
+import { UsersService } from 'src/users/services/users.service';
+import { ACCESS_LEVEL } from 'src/constants/roles';
 
 @Injectable()
 export class ProjectsService {
@@ -13,6 +15,7 @@ export class ProjectsService {
     private readonly projectRepository: Repository<ProjectsEntity>,
     @InjectRepository(UsersProjectsEntity)
     private readonly userProjectRepository: Repository<UsersProjectsEntity>,
+    private readonly userService: UsersService,
   ) {}
 
   public async createProject(
@@ -20,12 +23,15 @@ export class ProjectsService {
     userId: number,
   ): Promise<ProjectsEntity> {
     try {
+      const user = await this.userService.findUserById(userId);
+      //
+      //
       const lastProject: ProjectsEntity = await this.projectRepository
         .createQueryBuilder('project')
         .orderBy('project.id', 'DESC')
         .getOne();
 
-      let initialId = 1001;
+      let initialId = 10001;
 
       if (lastProject) {
         initialId = lastProject.id + 1;
@@ -36,6 +42,13 @@ export class ProjectsService {
       newProject.id = initialId;
       newProject.name = body.name;
       newProject.description = body.description;
+      //
+      await this.userProjectRepository.save({
+        id: initialId,
+        accessLevel: ACCESS_LEVEL.OWNER,
+        user: user,
+        project: body,
+      });
 
       const project = await this.projectRepository.save(newProject);
 
