@@ -61,7 +61,20 @@ export class AccessLevelGuard implements CanActivate {
 
     const user = await this.userService.findUserById(parseInt(idUser));
 
-    //const userExistInProject=user.projectsIncludes.find((project)=>project.id===)
+    const userExistInProject = user.projectsIncludes.find(
+      (project) => project.project.id === parseInt(req.params.projectId),
+    );
+
+    if (userExistInProject === undefined) {
+      throw new UnauthorizedException('No formas parte del projecto...!');
+    }
+
+    if (accesLevel !== userExistInProject.accessLevel) {
+      throw new UnauthorizedException(
+        'No tienes el nivel de acceso neceesario...!',
+      );
+    }
+
     return true;
   }
 }
