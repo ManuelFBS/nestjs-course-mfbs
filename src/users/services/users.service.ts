@@ -43,7 +43,7 @@ export class UsersService {
       newUser.role = body.role;
 
       const user = await this.userRepository.save(newUser);
-
+      console.log(user);
       return user;
     } catch (error) {
       throw ErrorManager.createSignatureError(error.message);
