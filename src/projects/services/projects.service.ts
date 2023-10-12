@@ -42,6 +42,8 @@ export class ProjectsService {
       newProject.name = body.name;
       newProject.description = body.description;
       //
+      const projectCreate = await this.projectRepository.create(newProject);
+      //
       await this.userProjectRepository.save({
         id: initialId,
         accessLevel: ACCESS_LEVEL.OWNER,
@@ -49,7 +51,7 @@ export class ProjectsService {
         project: body,
       });
 
-      const project = await this.projectRepository.save(newProject);
+      const project = await this.projectRepository.save(projectCreate);
 
       return project;
     } catch (error) {
