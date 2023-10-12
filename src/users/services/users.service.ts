@@ -87,36 +87,36 @@ export class UsersService {
     }
   }
 
-  public async relationToProject(
-    body: UserToProjectDTO,
-  ): Promise<UsersProjectsEntity> {
-    try {
-      const lastUserProject: UsersProjectsEntity =
-        await this.userProjectRepository
-          .createQueryBuilder('userproject')
-          .orderBy('userproject.id', 'DESC')
-          .getOne();
+  // public async relationToProject(
+  //   body: UserToProjectDTO,
+  // ): Promise<UsersProjectsEntity> {
+  //   try {
+  //     const lastUserProject: UsersProjectsEntity =
+  //       await this.userProjectRepository
+  //         .createQueryBuilder('userproject')
+  //         .orderBy('userproject.id', 'DESC')
+  //         .getOne();
 
-      let initialId = 1001;
+  //     let initialId = 1001;
 
-      if (lastUserProject) {
-        initialId = lastUserProject.id + 1;
-      }
+  //     if (lastUserProject) {
+  //       initialId = lastUserProject.id + 1;
+  //     }
 
-      const newUserProject = new UsersProjectsEntity();
+  //     const newUserProject = new UsersProjectsEntity();
 
-      newUserProject.id = initialId;
-      newUserProject.user = body.user;
-      newUserProject.project = body.project;
-      newUserProject.accessLevel = body.accessLevel;
+  //     newUserProject.id = initialId;
+  //     newUserProject.user = body.user;
+  //     newUserProject.project = body.project;
+  //     newUserProject.accessLevel = body.accessLevel;
 
-      const userProject = await this.userProjectRepository.save(newUserProject);
+  //     const userProject = await this.userProjectRepository.save(newUserProject);
 
-      return userProject;
-    } catch (error) {
-      throw ErrorManager.createSignatureError(error.message);
-    }
-  }
+  //     return userProject;
+  //   } catch (error) {
+  //     throw ErrorManager.createSignatureError(error.message);
+  //   }
+  // }
 
   public async findBy({ key, value }: { key: keyof UserDTO; value: any }) {
     try {
