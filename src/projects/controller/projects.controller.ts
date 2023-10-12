@@ -10,6 +10,8 @@ import {
 import { ProjectDTO, ProjectUpdateDTO } from '../dto/project.dto';
 import { ProjectsService } from '../services/projects.service';
 
+/* La clase ProjectsController es un controlador TypeScript 
+que maneja operaciones CRUD para proyectos. */
 @Controller('projects')
 export class ProjectsController {
   constructor(private readonly projectService: ProjectsService) {}
