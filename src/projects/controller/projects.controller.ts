@@ -28,7 +28,7 @@ export class ProjectsController {
     @Body() body: ProjectDTO,
     @Param('userId') userId: number,
   ) {
-    return await this.projectService.createProject(body);
+    return await this.projectService.createProject(body, userId);
   }
 
   @Get('all')
