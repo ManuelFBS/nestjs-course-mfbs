@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { STATUS_TASK } from '../../constants/status-task';
 import { ProjectsEntity } from '../../projects/entities/projects.entity';
 import { BaseEntity } from '../../config/base.entity';
@@ -18,5 +18,8 @@ export class TasksEntity extends BaseEntity {
   responsableName: string;
 
   @ManyToOne(() => ProjectsEntity, (project) => project.tasks)
+  @JoinColumn({
+    name: 'project_id',
+  })
   project: ProjectsEntity;
 }
