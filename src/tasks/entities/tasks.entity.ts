@@ -3,7 +3,7 @@ import { STATUS_TASK } from '../../constants/status-task';
 import { ProjectsEntity } from '../../projects/entities/projects.entity';
 import { BaseEntity } from '../../config/base.entity';
 
-@Entity({ name: 'task' })
+@Entity({ name: 'tasks' })
 export class TasksEntity extends BaseEntity {
   @Column()
   taskName: string;
