@@ -37,10 +37,10 @@ export class UsersController {
     return await this.userService.findUserById(id);
   }
 
-  // @Post('add-to-project')
-  // public async addToProject(@Body() body: UserToProjectDTO) {
-  //   return await this.userService.relationToProject(body);
-  // }
+  @Post('add-to-project')
+  public async addToProject(@Body() body: UserToProjectDTO) {
+    return await this.userService.relationToProject(body);
+  }
 
   @Put('edit/:id')
   public async updateUser(
