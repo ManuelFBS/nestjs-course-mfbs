@@ -28,8 +28,27 @@ export class TasksService {
         });
       }
 
+      const lastTask: TasksEntity = await this.taskRepository
+        .createQueryBuilder('task')
+        .orderBy('task.id', 'DESC')
+        .getOne();
+
+      let initialId = 10001;
+
+      if (lastTask) {
+        initialId = lastTask.id + 1;
+      }
+
+      const newTask = new TasksEntity();
+
+      newTask.id = initialId;
+      newTask.taskName = body.taskName;
+      newTask.taskDescription = body.taskDescription;
+      newTask.status = body.status;
+      newTask.responsableName = body.responsableName;
+
       return await this.taskRepository.save({
-        ...body,
+        ...newTask,
         project,
       });
     } catch (error) {
