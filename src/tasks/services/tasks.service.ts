@@ -24,7 +24,7 @@ export class TasksService {
       if (project === undefined) {
         throw new ErrorManager({
           type: 'NOT_FOUND',
-          message: 'No se encontrado el proyecto...',
+          message: 'No se ha encontrado el proyecto...',
         });
       }
 
