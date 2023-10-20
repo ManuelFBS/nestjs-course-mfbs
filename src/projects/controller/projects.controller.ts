@@ -15,6 +15,7 @@ import { RolesGuard } from '../../auth/guards/roles.guard';
 import { AccessLevelGuard } from '../../auth/guards/access-level.guard';
 import { AccessLevel } from '../../auth/decorators/access-level.decorator';
 import { Roles } from '../../auth/decorators/roles.decorator';
+import { ACCESS_LEVEL } from 'src/constants/roles';
 
 @Controller('projects')
 @UseGuards(AuthGuard, RolesGuard, AccessLevelGuard)
@@ -40,7 +41,7 @@ export class ProjectsController {
     return await this.projectService.findProjectById(id);
   }
 
-  @AccessLevel('OWNER')
+  @AccessLevel(ACCESS_LEVEL.OWNER)
   @Put('edit/:projectId')
   public async updateProject(
     @Body() body: ProjectUpdateDTO,
@@ -49,7 +50,7 @@ export class ProjectsController {
     return await this.projectService.updateProject(body, id);
   }
 
-  @AccessLevel('OWNER')
+  @AccessLevel(ACCESS_LEVEL.OWNER)
   @Delete('delete/:projectId')
   public async deleteProject(@Param('projectId') id: number) {
     return await this.projectService.deleteProject(id);
