@@ -15,8 +15,8 @@ import { AuthGuard } from '../../auth/guards/auth.guard';
 import { RolesGuard } from '../../auth/guards/roles.guard';
 import { ApiParam, ApiTags } from '@nestjs/swagger';
 import { AdminAccess } from '../../auth/decorators/admin.decorator';
-import { AccessLevel } from 'src/auth/decorators/access-level.decorator';
-import { ACCESS_LEVEL } from 'src/constants/roles';
+import { AccessLevel } from '../../auth/decorators/access-level.decorator';
+import { ACCESS_LEVEL } from '../../constants/roles';
 
 @ApiTags('Users')
 @Controller('users')
@@ -55,7 +55,6 @@ export class UsersController {
   @ApiParam({
     name: 'id',
   })
-  @AdminAccess()
   @Put('edit/:id')
   public async updateUser(
     @Body() body: UserUpdateDTO,
@@ -67,6 +66,7 @@ export class UsersController {
   @ApiParam({
     name: 'id',
   })
+  @AdminAccess()
   @Delete('delete/:id')
   public async deleteUser(@Param('id') id: number) {
     return await this.userService.deleteUser(id);
