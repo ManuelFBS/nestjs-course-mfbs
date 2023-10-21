@@ -16,6 +16,8 @@ import { AuthGuard } from '../../auth/guards/auth.guard';
 import { RolesGuard } from '../../auth/guards/roles.guard';
 import { ApiParam, ApiTags } from '@nestjs/swagger';
 import { AdminAccess } from '../../auth/decorators/admin.decorator';
+import { AccessLevel } from 'src/auth/decorators/access-level.decorator';
+import { ACCESS_LEVEL } from 'src/constants/roles';
 
 @ApiTags('Users')
 @Controller('users')
@@ -45,12 +47,10 @@ export class UsersController {
     return await this.userService.findUserById(id);
   }
 
-  @ApiParam({
-    name: 'projectId',
-  })
-  @Post('add-to-project/:projectId')
+  @AccessLevel(ACCESS_LEVEL.OWNER)
+  @Post('add-to-project')
   public async addToProject(@Body() body: UserToProjectDTO, projectId: number) {
-    return await this.userService.relationToProject(body, projectId);
+    return await this.userService.relationToProject(body);
   }
 
   @ApiParam({
@@ -64,6 +64,9 @@ export class UsersController {
     return await this.userService.updateUser(body, id);
   }
 
+  @ApiParam({
+    name: 'id',
+  })
   @Delete('delete/:id')
   public async deleteUser(@Param('id') id: number) {
     return await this.userService.deleteUser(id);
