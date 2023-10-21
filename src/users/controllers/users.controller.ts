@@ -12,7 +12,6 @@ import { UserDTO, UserToProjectDTO, UserUpdateDTO } from '../dto/user.dto';
 import { UsersService } from '../services/users.service';
 import { PublicAccess } from '../../auth/decorators/public.decorator';
 import { AuthGuard } from '../../auth/guards/auth.guard';
-// import { Roles } from '../../auth/decorators/roles.decorator';
 import { RolesGuard } from '../../auth/guards/roles.guard';
 import { ApiParam, ApiTags } from '@nestjs/swagger';
 import { AdminAccess } from '../../auth/decorators/admin.decorator';
@@ -56,6 +55,7 @@ export class UsersController {
   @ApiParam({
     name: 'id',
   })
+  @AdminAccess()
   @Put('edit/:id')
   public async updateUser(
     @Body() body: UserUpdateDTO,
