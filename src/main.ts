@@ -10,7 +10,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     snapshot: true,
   });
-
+  //
   app.use(morgan('dev'));
 
   app.useGlobalPipes(
