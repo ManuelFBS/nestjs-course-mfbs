@@ -25,6 +25,9 @@ import { PublicAccess } from '../../auth/decorators/public.decorator';
 export class ProjectsController {
   constructor(private readonly projectService: ProjectsService) {}
 
+  @ApiParam({
+    name: 'userId',
+  })
   @Roles('CREATOR')
   @Post('create/userOwner/:userId')
   public async createProject(
