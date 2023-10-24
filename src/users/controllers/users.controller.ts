@@ -13,7 +13,7 @@ import { UsersService } from '../services/users.service';
 import { PublicAccess } from '../../auth/decorators/public.decorator';
 import { AuthGuard } from '../../auth/guards/auth.guard';
 import { RolesGuard } from '../../auth/guards/roles.guard';
-import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiHeader, ApiParam, ApiTags } from '@nestjs/swagger';
 import { AdminAccess } from '../../auth/decorators/admin.decorator';
 import { AccessLevel } from '../../auth/decorators/access-level.decorator';
 import { ACCESS_LEVEL } from '../../constants/roles';
@@ -32,6 +32,9 @@ export class UsersController {
 
   // @Roles('ADMIN')
   @AdminAccess()
+  @ApiHeader({
+    name: 'mfbsnestjs_token',
+  })
   @Get('all')
   public async findAllUsers() {
     return await this.userService.findUsers();
