@@ -30,6 +30,8 @@ async function bootstrap() {
 
   app.enableCors(CORS);
 
+  app.setGlobalPrefix('api');
+
   const config = new DocumentBuilder()
     .setTitle('MFBSNestjs_Task API')
     .setDescription('Aplicación de gestión de tareas.')
@@ -38,7 +40,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
-  app.setGlobalPrefix('api');
+  // app.setGlobalPrefix('api');
 
   await app.listen(configService.get('PORT'));
 
