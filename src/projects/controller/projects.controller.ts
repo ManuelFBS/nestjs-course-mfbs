@@ -53,6 +53,7 @@ export class ProjectsController {
   }
 
   @Get('list/api')
+  @PublicAccess()
   public async listApi() {
     return await this.projectService.listApi();
   }
