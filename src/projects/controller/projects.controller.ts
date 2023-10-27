@@ -52,6 +52,11 @@ export class ProjectsController {
     return await this.projectService.findProjectById(id);
   }
 
+  @Get('list/api')
+  public async listApi() {
+    //
+  }
+
   @ApiParam({
     name: 'projectId',
   })
