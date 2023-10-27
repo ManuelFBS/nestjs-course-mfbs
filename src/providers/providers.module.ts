@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
-import { HttpService } from './http/http.service';
+import { HttpCustomService } from './http/http.service';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  providers: [HttpService],
-  exports: [HttpService],
+  imports: [HttpModule],
+  providers: [HttpCustomService],
+  exports: [HttpCustomService],
 })
 export class ProvidersModule {}
