@@ -13,7 +13,7 @@ import { UsersService } from '../services/users.service';
 import { PublicAccess } from '../../auth/decorators/public.decorator';
 import { AuthGuard } from '../../auth/guards/auth.guard';
 import { RolesGuard } from '../../auth/guards/roles.guard';
-import { ApiHeader, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiHeader, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AdminAccess } from '../../auth/decorators/admin.decorator';
 import { AccessLevel } from '../../auth/decorators/access-level.decorator';
 import { ACCESS_LEVEL } from '../../constants/roles';
@@ -43,6 +43,13 @@ export class UsersController {
   @ApiParam({
     name: 'id',
   })
+  @ApiHeader({
+    name: 'mfbsnestjs_token',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'No se encontró ningún resultado',
+  })
   @PublicAccess()
   @Get(':id')
   public async findUserById(@Param('id') id: number) {
@@ -68,6 +75,9 @@ export class UsersController {
 
   @ApiParam({
     name: 'id',
+  })
+  @ApiHeader({
+    name: 'mfbsnestjs_token',
   })
   @AdminAccess()
   @Delete('delete/:id')
