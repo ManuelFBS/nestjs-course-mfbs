@@ -54,7 +54,7 @@ export class ProjectsController {
 
   @Get('list/api')
   public async listApi() {
-    //
+    return await this.projectService.listApi();
   }
 
   @ApiParam({
