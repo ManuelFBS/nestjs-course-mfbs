@@ -40,8 +40,6 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
-  // app.setGlobalPrefix('api');
-
   await app.listen(configService.get('PORT'));
 
   console.log(`Application running on: ${await app.getUrl()}`);
